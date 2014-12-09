@@ -195,7 +195,7 @@ int freeRTOS_entry( void )
         /* vStartCheckpointTask(); */
         //xTaskCreate( vWat, "Print", configMINIMAL_STACK_SIZE, NULL, mainPRINT_TASK_PRIORITY, NULL );
 //        xTaskCreate( vWat, "wat", configMINIMAL_STACK_SIZE, NULL, mainPRINT_TASK_PRIORITY + 1, NULL );
-//        vStartPolledQueueTasks( mainQUEUE_POLL_PRIORITY );
+        vStartPolledQueueTasks( mainQUEUE_POLL_PRIORITY );
 /* 	vCreateBlockTimeTasks(); */
  	//vStartSemaphoreTasks( mainSEMAPHORE_TASK_PRIORITY ); 
 /* 	vStartMultiEventTasks(); */

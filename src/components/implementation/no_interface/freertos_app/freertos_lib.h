@@ -28,74 +28,15 @@ struct rb_head *k_rb;
 #define vSemaphoreBinaryCreate (xSemaphore); { xSemaphore = frt_vSemaphoreBinaryCreate(); }
 
 int
-xSemaphoreCreateBinary()
-{
-        return frt_xSemaphoreCreateBinary();
-}
-
-int
-xSemaphoreCreateCounting(portBASE_TYPE uxMaxCount, portBASE_TYPE uxInitialCount)
-{
-        return frt_xSemaphoreCreateCounting((int) uxMaxCount, (int) uxInitialCount);
-}
-
-int
-xSemaphoreCreateMutex()
-{
-        return frt_xSemaphoreCreateMutex();
-}
-
-int
-xSemaphoreCreateRecursiveMutex()
-{
-        return frt_xSemaphoreCreateRecursiveMutex();
-}
-
-int
 xSemaphoreTake(SemaphoreHandle_t xSemaphore, portTickType xTicksToWait)
 {
         return frt_xSemaphoreTake((int) xSemaphore, (int) xTicksToWait);
 }
 
 int
-xSemaphoreTakeRecursive(SemaphoreHandle_t xSemaphore, portTickType xTicksToWait)
-{
-        return frt_xSemaphoreTakeRecursive((int) xSemaphore, (int) xTicksToWait);
-}
-
-int
-xSemaphoreTakeFromISR(SemaphoreHandle_t xSemaphore, portBASE_TYPE pxHigerPriorityTaskWoken)
-{
-        return frt_xSemaphoreTakeFromISR((int) xSemaphore, (int) pxHigerPriorityTaskWoken);
-}
-
-int
 xSemaphoreGive(SemaphoreHandle_t xSemaphore)
 {
         return frt_xSemaphoreGive((int) xSemaphore);
-}
-
-int
-xSemaphoreGiveRecursive(SemaphoreHandle_t xMutex)
-{
-        return frt_xSemaphoreGiveRecursive((int) xMutex);
-}
-
-int
-xSemaphoreGiveFromISR(SemaphoreHandle_t xSemaphore, portBASE_TYPE pxHigerPriorityTaskWoken)
-{
-        return frt_xSemaphoreGiveFromISR((int) xSemaphore, (int) pxHigerPriorityTaskWoken);
-}
-
-void
-vSemaphoreDelete(SemaphoreHandle_t xSemaphore){
-        frt_vSemaphoreDelete((int) xSemaphore);
-}
-
-int
-xSemaphoreGetMutexHolder (SemaphoreHandle_t xSemaphore)
-{
-        return frt_xSemaphoreGetMutexHolder((int) xSemaphore);
 }
 
 //Tasks
