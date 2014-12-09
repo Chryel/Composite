@@ -98,7 +98,21 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelayUntil				1
 #define INCLUDE_vTaskDelay					1
 #define INCLUDE_uxTaskGetStackHighWaterMark 0 /* Do not use this option on the PC port. */
-#define INCLUDE_xTaskGetSchedulerState		1
+#define INCLUDE_xTaskGetSchedulerState          1
+//Semaphore&Mutex
+#define INCLUDE_vSemaphoreBinaryCreate          1
+#define INCLUDE_xSemaphoreBinaryCreate          1
+#define INCLUDE_xSemaphoreCreateCounting        1
+#define INCLUDE_xSemaphoreCreateMutex           1
+#define INCLUDE_xSemaphoreCreateRecursiveMutex  1
+#define INCLUDE_xSemaphoreTake                  1
+#define INCLUDE_xSemaphoreTakeRecursive         1
+#define INCLUDE_xSemaphoreTakeFromISR           1
+#define INCLUDE_xSemaphoreGive                  1
+#define INCLUDE_xSemaphoreGiveRecursive         1
+#define INCLUDE_xSemaphoreGiveFromISR           1
+#define INCLUDE_vSemaphoreDelete                1
+#define INCLUDE_xSemaphoreGetMutexHolder        1
 
 extern void vMainQueueSendPassed( void );
 #define traceQUEUE_SEND( pxQueue ) vMainQueueSendPassed()
