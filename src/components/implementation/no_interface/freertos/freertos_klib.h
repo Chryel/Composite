@@ -49,14 +49,24 @@ frt_vSemaphoreBinaryCreate (void)
 }
 
 int
-frt_xSemaphoreBinaryCreateCounting (portBASE_TYPE uxMaxCount, int uxInitialCount)
+frt_xSemaphoreCreateBinary (void)
+{
+        int ret = 0;
+        while (frt_obj_array[ret].type != FRT_OBJ_EMPTY && ret != MAX_FRT_OBJS) ret++;
+        if (ret == MAX_FRT_OBJS) return -1;
+        xSemaphoreCreateBinary();
+        return ret;
+}
+
+int
+frt_xSemaphoreCreateCounting (int uxMaxCount, int uxInitialCount)
 {
         int ret = 0;
         while (frt_obj_array[ret].type != FRT_OBJ_EMPTY && ret != MAX_FRT_OBJS) ret++;
         if (ret == MAX_FRT_OBJS) return -1;
         frt_obj_array[ret].type = FRT_OBJ_SEMA;
 
-        frt_obj_array[ret].obj = xSemaphoreCreateCounting(uxMaxCount, uxInitialCount);
+        frt_obj_array[ret].obj = xSemaphoreCreateCounting((portBASE_TYPE) uxMaxCount, uxInitialCount);
 
         return ret;
 }
@@ -90,28 +100,61 @@ int
 frt_xSemaphoreTake (int xSemaphore, int xTicksToWait)
 {
         assert(frt_obj_array[xSemaphore].type == FRT_OBJ_SEMA);
-        return xSemaphoreTake(frt_obj_array[xSemaphore].obj, (portTickType) xTicksToWait);
+        return xSemaphoreTake((SemaphoreHandle_t) frt_obj_array[xSemaphore].obj, (portTickType) xTicksToWait);
 }
 
 int
 frt_xSemaphoreTakeRecursive (int xMutex, int xTicksToWait)
 {
         assert(frt_obj_array[xMutex].type == FRT_OBJ_SEMA);
-        return xSemaphoreTakeRecursive(frt_obj_array[xMutex].obj, (portTickType) xTicksToWait);
+        return xSemaphoreTakeRecursive((SemaphoreHandle_t) frt_obj_array[xMutex].obj, (portTickType) xTicksToWait);
+}
+
+int
+frt_xSemaphoreTakeFromISR (int xSemaphore, int pxHigherPriorityTaskWoken)
+{
+        assert(frt_obj_array[xSemaphore].type == FRT_OBJ_SEMA);
+        return xSemaphoreTakeFromISR((SemaphoreHandle_t) frt_obj_array[xSemaphore].obj, (portBASE_TYPE) pxHigherPriorityTaskWoken);
 }
 
 int
 frt_xSemaphoreGive (int xSemaphore)
 {
         assert(frt_obj_array[xSemaphore].type == FRT_OBJ_SEMA);
-        return xSemaphoreGive(frt_obj_array[xSemaphore].obj);
+        return xSemaphoreGive((SemaphoreHandle_t) frt_obj_array[xSemaphore].obj);
 }
 
 int
 frt_xSemaphoreGiveRecursive (int xMutex)
 {
         assert(frt_obj_array[xMutex].type == FRT_OBJ_SEMA);
-        return xSemaphoreGiveRecursive(frt_obj_array[xMutex].obj);
+        return xSemaphoreGiveRecursive((SemaphoreHandle_t) frt_obj_array[xMutex].obj);
+}
+
+int
+frt_xSemaphoreGiveFromISR (int xSemaphore, int pxHigherPriorityTaskWoken)
+{
+        assert(frt_obj_array[xSemaphore].type == FRT_OBJ_SEMA);
+        return xSemaphoreGiveFromISR((SemaphoreHandle_t) frt_obj_array[xSemaphore].obj, (portBASE_TYPE) pxHigherPriorityTaskWoken);
+}
+
+void
+frt_vSemaphoreDelete (int xSemaphore)
+{
+        assert(frt_obj_array[xSemaphore].type == FRT_OBJ_SEMA);
+        vSemaphoreDelete(frt_obj_array[xSemaphore].obj);
+}
+
+int
+frt_xSemaphoreGetMutexHolder (int xMutex)
+{
+        /*Jobin Bae: Currently not fully implemented. 
+        int ret = 0;
+        while(frt_obj_array[ret].type != SemaphoreHandle_t) ret++;
+        if (ret == MAX_FRT_OBJS) return -1;
+        */
+        assert(frt_obj_array[xMutex].type == FRT_OBJ_MUTEX);
+        return xSemaphoreGetMutexHolder((SemaphoreHandle_t) frt_obj_array[xMutex].obj);
 }
 
 /********
